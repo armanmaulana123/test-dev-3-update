@@ -55,24 +55,25 @@ module.exports = {
             if(!isPasswordCorrect) {
                 res.status(401).json({ message: "Password Salah!" });
                 return;
+            }else{
+                const token = createToken({
+                    id: user.id,
+                    Email: user.Email,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt
+                });
+        
+                res.status(201).json({
+                    id: user.id,
+                    Name: user.Name,
+                    Email: user.Email,
+                    Role: user.Role,
+                    Token : "Bearer " + token,
+                    createdAt: user.createdAt,
+                    updatedAt: user.updatedAt
+                })
             }
     
-            const token = createToken({
-                id: user.id,
-                Email: user.Email,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            });
-    
-            res.status(201).json({
-                id: user.id,
-                Name: user.Name,
-                Email: user.Email,
-                Role: user.Role,
-                Token : "Bearer " + token,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt
-            })
         }else{
             res.status(400).json({
                 status: "FAIL",
